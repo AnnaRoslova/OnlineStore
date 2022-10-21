@@ -27,5 +27,9 @@ namespace OnlineShopWebApp.Models
             Manufactured = manufactured;
             instanceCounter++;
         }
-    
+        public override string ToString()
+        {
+            return $"{Id}\n{Name}\n{Cost}\n\n";
+        }
+    }
 }
