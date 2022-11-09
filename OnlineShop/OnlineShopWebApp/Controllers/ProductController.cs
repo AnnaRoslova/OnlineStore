@@ -9,13 +9,12 @@ namespace OnlineShopWebApp.Controllers
         {
             produtStorage = new ProductStorage();
         }
-        public string Index (int id)
+        public IActionResult Index (int id)
         {
             var product = produtStorage.TryGetById(id);
             if (product == null)
-                return $"По id {id} товаров не найдено.";
-            else
-                return $"{product}{product.Description}\n{product.Color}\n{product.Compound}\n{product.Manufactured}\n";
+                return View("NotFound", id);
+            return View(product); 
         }
     }
 }

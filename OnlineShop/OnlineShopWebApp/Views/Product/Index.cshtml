@@ -1,0 +1,20 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="row">
+    <div class="col-4 card shadow">
+        <div class="card-body">
+            <img class="card-img-top" src="@Model.ImagePath" />
+            <h5>@Model.Name</h5>
+            <h5>@Model.Cost руб</h5>
+            <div>
+                <a class="btn btn-dark" href="#" role="button">Добавить в корзину</a>
+            </div>
+            <br />
+            <div>
+                <a class="btn btn-dark" href="/home/index" role="button">Продолжить покупки</a>
+            </div>
+        </div>
+    </div>
+</div>

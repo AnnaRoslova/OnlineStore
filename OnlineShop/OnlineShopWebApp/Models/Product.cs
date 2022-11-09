@@ -11,7 +11,9 @@
         public string Compound { get; }
         public string Manufactured { get; }
 
-        public Product(decimal cost, string name, string description, string color, string compound, string manufactured)
+        public string ImagePath { get; }
+
+        public Product(decimal cost, string name, string description, string color, string compound, string manufactured, string imagePath)
         {
             Id = instanceCounter;
             Cost = cost;
@@ -20,6 +22,7 @@
             Color = color;
             Compound = compound;
             Manufactured = manufactured;
+            ImagePath = imagePath;
             instanceCounter++;
         }
         public override string ToString()

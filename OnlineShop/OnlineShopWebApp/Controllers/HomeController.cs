@@ -12,15 +12,10 @@ namespace OnlineShopWebApp.Controllers
             produtStorage = new ProductStorage();
         }
 
-        public string Index()
+        public IActionResult Index()
         {
             var products = produtStorage.GetProducts();
-            var result = "";
-            foreach (var produrt in products)
-            {
-                result += produrt+"\n\n";
-            }
-            return result;
+            return View(products);
         }
 
         public IActionResult Privacy()
