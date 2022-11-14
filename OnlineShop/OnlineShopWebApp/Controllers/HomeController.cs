@@ -6,10 +6,10 @@ namespace OnlineShopWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        public readonly ProductStorage produtStorage;
+        public readonly ProductsStorage produtStorage;
         public HomeController()
         {
-            produtStorage = new ProductStorage();
+            produtStorage = new ProductsStorage();
         }
 
         public IActionResult Index()

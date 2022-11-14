@@ -4,7 +4,7 @@ using OnlineShopWebApp.Models;
 
 namespace OnlineShopWebApp
 {
-    public class ProductStorage
+    public class ProductsStorage
     {
         private static List<Product> products = new List<Product>()
         {

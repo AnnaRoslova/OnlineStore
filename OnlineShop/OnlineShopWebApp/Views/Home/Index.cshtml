@@ -8,11 +8,11 @@
     <div class="col-3 card shadow">
         <img class="imgStyle" src="@produrt.ImagePath"  alt="изображение товара"/>
         <div class="card-body">
-            <a href="/product/index/@produrt.Id">
+            <a class="TextStyle" href="/product/index/@produrt.Id">
                 <h5>@produrt.Name</h5>
                 <h5>@produrt.Cost руб</h5>
             </a>
-            <a class="btn btn-dark" href="#" role="button">Добавить в корзину</a>
+            <a class="btn btn-primary shadow" href="/cart/add?productId=@produrt.Id" role="button">Добавить в корзину</a>
         </div>
     </div>     
     }
