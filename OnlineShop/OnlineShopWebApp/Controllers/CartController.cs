@@ -5,20 +5,20 @@ namespace OnlineShopWebApp.Controllers
 {
     public class CartController : Controller
     {
-        public readonly ProductsStorage produtStorage;
-        public CartController()
+        readonly User user;
+        public CartController(User user)
         {
-            produtStorage = new ProductsStorage();
+            this.user = user;
         }
         public IActionResult Index()
         {
-            var cart = CartsRepository.TryGetBuUserId(Canstants.UserId);
+            var cart = CartsRepository.TryGetBuUserId(user.UserId);
             return View(cart);
         }
-        public IActionResult Add (int productid)
+        public IActionResult Add (int productid, ProductsStorage productsStorage)
         {
-            var product = produtStorage.TryGetById(productid);
-            CartsRepository.Add(product, Canstants.UserId);
+            var product = productsStorage.TryGetById(productid);
+            CartsRepository.Add(product, user.UserId);
             return RedirectToAction("Index"); 
         }
     }

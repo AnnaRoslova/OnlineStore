@@ -4,14 +4,9 @@ namespace OnlineShopWebApp.Controllers
 {
     public class ProductController : Controller
     {
-        public readonly ProductsStorage produtStorage;
-        public ProductController()
+        public IActionResult Index (int id, ProductsStorage productsStorage)
         {
-            produtStorage = new ProductsStorage();
-        }
-        public IActionResult Index (int id)
-        {
-            var product = produtStorage.TryGetById(id);
+            var product = productsStorage.TryGetById(id);
             if (product == null)
                 return View("NotFound", id);
             return View(product); 

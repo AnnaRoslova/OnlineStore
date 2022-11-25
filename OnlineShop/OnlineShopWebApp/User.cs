@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace OnlineShopWebApp
 {
-    public static class Canstants
+    public class User
     {
-        public static string UserId = "UserId";
+        public string UserId = "UserId";
     }
 }
