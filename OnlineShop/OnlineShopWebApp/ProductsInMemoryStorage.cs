@@ -4,9 +4,9 @@ using OnlineShopWebApp.Models;
 
 namespace OnlineShopWebApp
 {
-    public class ProductsStorage
+    public class ProductsInMemoryStorage : IProductsStorage
     {
-        private static List<Product> products = new List<Product>()
+        private List<Product> products = new List<Product>()
         {
             new Product(1399,"Шлейка", "Шлейка маленьких собак", "Черный", "Кожа", "Аркон", "/images/shleika.png"),
             new Product(2459,"Лежанка", "Лежанка для кошек", "Бежевый", "Холофайбер", "LeRo", "/images/lezanka.png"),

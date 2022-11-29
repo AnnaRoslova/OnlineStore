@@ -20,9 +20,9 @@ namespace OnlineShopWebApp
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<CartsRepository>();
+            services.AddSingleton<ICartsRepository, CartsInMemoryRepository>();
             services.AddSingleton<User>();
-            services.AddSingleton<ProductsStorage>();
+            services.AddSingleton<IProductsStorage, ProductsInMemoryStorage>();
             services.AddControllersWithViews();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
