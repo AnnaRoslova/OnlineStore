@@ -1,6 +1,6 @@
 ﻿@model Cart
 
-@if (Model == null)
+@if (Model == null || Model.Items.Count == 0)
 {
                 <h1>Корзина пустая</h1>
 }
@@ -20,12 +20,14 @@ else
                 <tbody>
                     @foreach (var item in Model.Items)
                     {
-                        <tr>
-                            <td>@item.Product.Name</td>
-                            <td>@item.Product.Cost</td>
-                            <td>@item.Amount</td>
-                            <td>@item.Cost</td>
-                        </tr>
+                    <tr>
+                        <td>@item.Product.Name</td>
+                        <td>@item.Product.Cost</td>
+                        <td>@item.Amount</td>
+                        <td>@item.Cost</td>
+                        <td><a class="btn btn-outline-primary btn-circle" href="/cart/add?productId=@item.Product.Id" role="button">+</a>
+                        <a class="btn btn-outline-primary btn-circle" href="/cart/decreaseAmount?productId=@item.Product.Id" role="button">-</a></td>
+                    </tr>
                     }
                 </tbody>
             </table>
@@ -36,6 +38,7 @@ else
             <div class="text-center">
                 <a class="btn btn-primary" href="/home/index" role="button">Продолжить покупки</a>
                 <a class="btn btn-primary" href="#" role="button">Оформить заказ</a>
+                <a class="btn btn-danger" href="/cart/clear" role="button">Очистить корзину</a>
             </div>
         </div>
     </div>

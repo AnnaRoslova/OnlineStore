@@ -26,5 +26,15 @@ namespace OnlineShopWebApp.Controllers
             cartsInMemoryRepository.Add(product, user.UserId);
             return RedirectToAction("Index"); 
         }
+        public IActionResult DecreaseAmount(int productid)
+        {
+            cartsInMemoryRepository.DecreaseAmount(productid, user.UserId);
+            return RedirectToAction("Index");
+        }
+        public IActionResult Clear(User user)
+        {
+            cartsInMemoryRepository.Clear(user.UserId);
+            return RedirectToAction("Index");
+        }
     }
 }

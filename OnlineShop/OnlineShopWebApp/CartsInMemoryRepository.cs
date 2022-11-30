@@ -54,5 +54,34 @@ namespace OnlineShopWebApp
             }
 
         }
+
+        public void DecreaseAmount(int productid, string userid)
+        {
+            var existingCart = TryGetBuUserId(userid);
+            if (existingCart == null)
+            {
+                return;
+            }
+            else
+            {
+                var existingCartItem = existingCart?.Items?.FirstOrDefault(x => x.Product.Id == productid);
+                if (existingCartItem == null)
+                {
+                    return;
+                }
+
+                existingCartItem.Amount -= 1;
+                if(existingCartItem.Amount == 0)
+                {
+                    existingCart.Items.Remove(existingCartItem);
+                }
+            }
+        }
+
+        public void Clear(string userid)
+        {
+            var existingCart = TryGetBuUserId(userid);
+            carts.Remove(existingCart);
+        }
     }
 }
