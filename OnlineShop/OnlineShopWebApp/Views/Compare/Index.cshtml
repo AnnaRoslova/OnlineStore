@@ -1,0 +1,49 @@
+﻿@model Compare
+
+@if (Model == null)
+{
+    <h3>Список товаров для сравнения пуст</h3>
+}
+else
+{
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Название</th>
+                        <th>Цена руб</th>
+                        <th>Состав</th>
+                        <th>Цвет</th>
+                        <th>Производитель</th>
+                        <th>Материал</th>
+                        <th>Описание</th>
+                        <th>        </th>
+                        <th>        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product  in Model.productsCompare)
+                    {
+                    <tr>
+                        <td>@product.Name</td>
+                        <td>@product.Cost</td>
+                        <td>@product.Compound</td>
+                        <td>@product.Color</td>
+                        <td>@product.Manufactured</td>
+                        <td>@product.Compound</td>
+                        <td>@product.Description</td>
+                        <td><a class="btn btn-outline-primary" href="/cart/add?productId=@product.Id" role="button">Добавить в корзину</a></td>
+                        <td><a class="btn btn-outline-primary" href="/compare/delete?productId=@product.Id" role="button">удалить из списка</a></td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="text-center">
+                <a class="btn btn-primary" href="/home/index" role="button">В каталог</a>
+                <a class="btn btn-danger" href="/compare/clear" role="button">Очистить список</a>
+            </div>
+        </div>
+    </div>
+}
+
