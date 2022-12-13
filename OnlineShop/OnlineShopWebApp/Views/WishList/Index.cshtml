@@ -1,0 +1,22 @@
+﻿@model WishList
+<div class="row">
+    @foreach (var produrt in Model.productsWishList)
+    {
+        <div class="col-3 card shadow">
+            <img class="imgStyle" src="@produrt.ImagePath" alt="изображение товара" />
+            <div class="card-body">
+                <a class="TextStyle" href="/product/index/@produrt.Id">
+                    <h5>@produrt.Name</h5>
+                    <h5>@produrt.Cost руб</h5>
+                </a>
+                <a class="btn btn-outline-primary" href="/cart/add?productId=@produrt.Id" role="button">Добавить в корзину</a>
+                <a class="btn btn-outline-primary" href="/compare/add?productId=@produrt.Id" role="button">Сравнить</a>
+                <a class="btn btn-outline-primary" href="/wishlist/delete?productId=@produrt.Id" role="button">удалить из списка</a>
+            </div>
+        </div>
+    }
+</div>
+<div class="text-center">
+    <a class="btn btn-primary" href="/home/index" role="button">В каталог</a>
+    <a class="btn btn-danger" href="/wishlist/clear" role="button">Очистить список</a>
+</div>
