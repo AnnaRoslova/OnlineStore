@@ -1,8 +1,7 @@
-﻿using OnlineShopWebApp.Models;
-namespace OnlineShopWebApp
+﻿namespace OnlineShopWebApp
 {
     public interface IOrdersRepository
     {
-        void Add(Order order);
+        void Add(Cart cart);
     }
 }

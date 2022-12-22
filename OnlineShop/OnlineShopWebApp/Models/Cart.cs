@@ -13,15 +13,7 @@ namespace OnlineShopWebApp
         {
             get
             {
-                return Items?.Sum(x => x.Cost) ?? 0;
-            }
-        }
-
-        public decimal Amount
-        {
-            get
-            {
-                return Items?.Sum(x => x.Amount) ?? 0;
+                return Items.Sum(x => x.Cost);
             }
         }
     }

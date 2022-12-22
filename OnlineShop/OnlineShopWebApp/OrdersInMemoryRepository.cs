@@ -7,10 +7,10 @@ namespace OnlineShopWebApp
 {
     public class OrdersInMemoryRepository : IOrdersRepository
     {
-        private List<Order> orders = new List<Order>();
-        public void Add(Order order)
+        private List<Cart> orders = new List<Cart>();
+        public void Add(Cart cart)
         {
-            orders.Add(order);
+            orders.Add(cart);
         }
     }
 }

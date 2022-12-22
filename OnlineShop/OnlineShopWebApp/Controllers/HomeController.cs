@@ -7,20 +7,14 @@ namespace OnlineShopWebApp.Controllers
     public class HomeController : Controller
     {
         private readonly IProductsStorage productsStorage;
-        private readonly ICartsRepository cartsRepository;
-        private readonly User user;
 
-        public HomeController(IProductsStorage productsStorage, ICartsRepository cartsRepository, User user)
+        public HomeController(IProductsStorage productsStorage)
         {
             this.productsStorage = productsStorage;
-            this.cartsRepository = cartsRepository;
-            this.user = user;
         }
 
         public IActionResult Index()
         {
-            var cart = cartsRepository.TryGetBuUserId(user.UserId);
-            ViewBag.productCount = cart?.Amount;
             var products = productsStorage.GetProducts();
             return View(products);
         }
