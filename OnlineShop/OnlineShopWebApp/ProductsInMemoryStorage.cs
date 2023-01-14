@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using OnlineShopWebApp.Models;
 
@@ -22,6 +23,29 @@ namespace OnlineShopWebApp
         public Product TryGetById(int id)
         {
             return products.FirstOrDefault(product => product.Id == id);
+        }
+
+        public void AddProduct(Product product)
+        {
+            products.Add(product);
+        }
+       
+        public void ProductDelete(Product product)
+        {
+            products.Remove(product);
+        }
+        public void Update(Product product) {
+            var existingProduct = products.FirstOrDefault(x => x.Id == product.Id);
+            if(existingProduct == null)
+            {
+                return;
+            }
+            existingProduct.Name = product.Name;
+            existingProduct.Cost = product.Cost;
+            existingProduct.Color = product.Color;
+            existingProduct.Manufactured = product.Manufactured;
+            existingProduct.Description = product.Description;
+            existingProduct.Compound = product.Compound;
         }
     }
 }

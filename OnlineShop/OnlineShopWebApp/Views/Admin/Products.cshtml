@@ -1,6 +1,29 @@
-﻿<div class="row">
+﻿@model List<Product>
+<div class="row">
     @await Html.PartialAsync("AdminLeftMenu")
     <div class="col-9">
-        <h3>Список продуктов</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Цена руб</th>
+                    <th>Описание</th>
+                    <th></th>
+                    <th><a href="/admin/addproduct">Добавить новый товар</a></th>
+                </tr>
+            </thead>  
+            @foreach (var product in Model)
+            {
+        <tr>
+            <th>
+                <a href="/product/index?id=@product.Id">@product.Name</a>
+            </th>
+            <td>@product.Cost руб</td>
+            <td>@product.Description руб</td>
+            <td><a href="/admin/edit?id=@product.Id">реадактировать</a></td>
+            <td><a href="/admin/productdelete?id=@product.Id">удалить</a></td>
+        </tr>
+            }
+        </table>
     </div>
 </div>
