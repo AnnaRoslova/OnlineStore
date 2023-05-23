@@ -1,56 +1,42 @@
-﻿using OnlineShopWebApp.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShopWebApp.Models;
 
-namespace OnlineShopWebApp.Controllers
+namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
-    public class AdminController : Controller
+    [Area("Admin")]
+    public class ProductController : Controller
     {
         private readonly IProductsStorage productsStorage;
 
-        public AdminController(IProductsStorage productsStorage)
+        public ProductController(IProductsStorage productsStorage)
         {
             this.productsStorage = productsStorage;
         }
-
-        public ActionResult Orders()
-        {
-            return View();
-        }
-        public ActionResult Users()
-        {
-            return View();
-        }
-
-        public ActionResult Roles()
-        {
-            return View();
-        }
-
-        public ActionResult Products()
+        public ActionResult Index()
         {
             var products = productsStorage.GetProducts();
             return View(products);
         }
-        public IActionResult AddProduct()
+        public IActionResult Add()
         {
 
             return View();
         }
         [HttpPost]
-        public IActionResult AddProduct(Product product)
+        public IActionResult Add(Product product)
         {
             if (!ModelState.IsValid)
             {
                 return View(product);
             }
             productsStorage.AddProduct(product);
-            return RedirectToAction("Products");
+            return RedirectToAction(nameof(Index));
         }
-        public IActionResult ProductDelete(int productId)
+        public IActionResult Delete(int productId)
         {
             var product = productsStorage?.TryGetById(productId);
             productsStorage.ProductDelete(product);
-            return RedirectToAction("Products");
+            return RedirectToAction(nameof(Index));
         }
         public IActionResult Edit(int id)
         {
@@ -66,7 +52,7 @@ namespace OnlineShopWebApp.Controllers
                 return View(product);
             }
             productsStorage.Update(product);
-            return RedirectToAction("Products");
+            return RedirectToAction(nameof(Index));
         }
     }
 }

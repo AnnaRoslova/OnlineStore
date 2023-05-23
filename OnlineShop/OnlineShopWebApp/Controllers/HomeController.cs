@@ -16,24 +16,20 @@ namespace OnlineShopWebApp.Controllers
             this.cartsRepository = cartsRepository;
             this.user = user;
         }
-
+        [HttpPost]
+        public IActionResult Search(string request)
+        {
+            var productSearch = productsStorage.SearchName(request);
+            if (productSearch.Count == 0)
+                return RedirectToAction("Index", "Home");
+            return View("index", productSearch);
+        }
         public IActionResult Index()
         {
             var cart = cartsRepository.TryGetBuUserId(user.UserId);
             ViewBag.productCount = cart?.Amount;
             var products = productsStorage.GetProducts();
             return View(products);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

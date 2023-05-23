@@ -1,0 +1,41 @@
+﻿@model List<Product>
+<div class="row">
+    @await Html.PartialAsync("AdminLeftMenu")
+    <div class="col-9">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Цена руб</th>
+                    <th>Описание</th>
+                    <th></th>
+                    <th><a asp-area="admin" 
+                           asp-controller="product" 
+                           asp-action="add">Добавить новый товар</a></th>
+                </tr>
+            </thead>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <th>
+                        <a href="/product/index?id=@product.Id">@product.Name</a>
+                    </th>
+                    <td>@product.Cost руб</td>
+                    <td>@product.Description руб</td>
+                    <td>
+                        <a asp-area="Admin"
+                           asp-controller="Product"
+                           asp-action="Edit"
+                           asp-route-productId="@product.Id">реадактировать</a>
+                    </td>
+                    <td>
+                        <a asp-area="Admin"
+                           asp-controller="Product"
+                           asp-action="Delete"
+                           asp-route-productId="@product.Id">удалить</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+﻿@model UserAccount
+<form method="post">
+    <div asp-validation-summary="All">
+        <div class="row">
+            <div class="col-6">
+                <label>Имя:</label>
+                <input class="form-control" asp-for="UserName" value="@Model.UserName" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <label>Телефон:</label>
+                <input class="form-control" asp-for="Phone" value="@Model.Phone" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <label>E-mail:</label>
+                <input class="form-control" asp-for="Email" value="@Model.Email" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <label>Пароль:</label>
+                <input class="form-control" type="password" asp-for="Password" value="@Model.Password" />
+            </div>
+        </div>
+    </div>
+    <div>
+        <button type="submit" asp-area="Admin" asp-controller="User" asp-action="Edit">Сохранить</button>
+    </div>
+</form>

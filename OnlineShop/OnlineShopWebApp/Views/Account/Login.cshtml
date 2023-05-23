@@ -1,15 +1,69 @@
-﻿<form method="post">
+﻿@model Login
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div>
+                        <h3>Вход</h3>
+                    </div>
+                    <div asp-validation-summary="All">
+                        <div class="row">
+                            <div class="col-6">
+                                <input class="form-control" type="text" asp-for="UserName" />
+                                <span asp-validation-for="UserName"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <input class="form-control" type="password" asp-for="Password" />
+                                <span asp-validation-for="Password"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <label>Запомнить меня</label>
+                                <input class="form-control" type="checkbox" name="rememberMe" />
+
+                                <a href="/account/register">Зарегистрироваться</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="submit" asp-controller="Account" asp-action="Login">Войти</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--
+    <form method="post">
     <div>
         <h3>Вход</h3>
     </div>
+    <div asp-validation-summary="All">
     <div class="row">
         <div class="col-6">
-            <input class="form-control" type="text" name="username" />
+            <input class="form-control" type="text" asp-for="UserName" />
+            <span asp-validation-for="UserName"></span>
         </div>
     </div>
     <div class="row">
         <div class="col-6">
-            <input class="form-control" type="password" name="password" />
+            <input class="form-control" type="password" asp-for="Password" />
+            <span asp-validation-for="Password"></span>
         </div>
     </div>
     <div class="row">
@@ -20,7 +74,9 @@
             <a href="/account/register">Зарегистрироваться</a>
         </div>
     </div>
+        </div>
     <div>
         <button type="submit" asp-controller="Account" asp-action="Login">Войти</button>
     </div>
 </form>
+-->

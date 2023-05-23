@@ -1,0 +1,15 @@
+﻿@model Role
+<form method="post">
+    <div asp-validation-summary="All">
+        <div class="row">
+            <div class="col-6">
+                <label asp-for="Name">Название:</label>
+                <input class="form-control" type="text" asp-for="Name" name="name" />
+                <span asp-validation-for="Name"></span>
+            </div>
+        </div>
+    </div>
+    <div>
+        <button type="submit" asp-area="Admin" asp-controller="Role" asp-action="Add">Сохранить</button>
+    </div>
+</form>

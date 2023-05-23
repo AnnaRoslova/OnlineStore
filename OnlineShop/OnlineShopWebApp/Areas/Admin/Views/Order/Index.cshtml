@@ -1,0 +1,34 @@
+﻿@model List<Order>
+<div class="row">
+   @await Html.PartialAsync("AdminLeftMenu")
+    <div class="col-9">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Имя пользователя</th>
+                    <th>Сумма</th>
+                    <th>Статус</th>
+                    <th>Email</th>
+                    <th>Дата</th>
+                    <th>Время</th>
+                    <th></th>
+                </tr>
+            </thead>
+            @foreach (var order in Model)
+            {
+        <tr>
+            <td>@order.User.Name </td>
+            <td>@order.Cost</td>
+            <td>@EnumHelper.GetDisplayName(order.Statuses)</td>
+            <td>@order.User.Email</td>
+            <td>@order.CreateDateTime.ToString("d")</td>
+            <td>@order.CreateDateTime.ToString("t")</td>
+            <td><a asp-area="Admin" 
+                   asp-controller="Order" 
+                   asp-action="Detail" 
+                   asp-route-orderId="@order.Id">Подробности</a></td>
+        </tr>
+            }
+        </table>
+    </div>
+</div>

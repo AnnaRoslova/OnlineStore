@@ -1,0 +1,33 @@
+﻿@model Register
+    <div asp-validation-summary="All">
+        <div class="row">
+            <div class="col-6">
+                <input class="form-control" placeholder="Введите имя" asp-for="UserName" />
+                <span asp-validation-for="UserName"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <input class="form-control" placeholder="Введите номер телефона" asp-for="Phone" />
+                <span asp-validation-for="Phone"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <input class="form-control" placeholder="Введите адресс электронной почты" asp-for="Email" />
+                <span asp-validation-for="Email"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <input class="form-control" placeholder="Введите пароль" type="password" asp-for="Password" />
+                <span asp-validation-for="Password"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <input class="form-control" placeholder="Повторите пароль" type="password" asp-for="ConfirmPassword" />
+                <span asp-validation-for="ConfirmPassword"></span>
+            </div>
+        </div>
+    </div>

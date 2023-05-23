@@ -11,12 +11,12 @@ namespace OnlineShopWebApp.Controllers
             this.productsStorage = productsStorage;
         }
 
-        public IActionResult Index (int id)
+        public IActionResult Index(int id)
         {
             var product = productsStorage.TryGetById(id);
             if (product == null)
                 return View("NotFound", id);
-            return View(product); 
+            return View(product);
         }
     }
 }

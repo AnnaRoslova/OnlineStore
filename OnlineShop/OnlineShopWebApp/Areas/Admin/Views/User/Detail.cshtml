@@ -1,0 +1,17 @@
+﻿@model UserAccount
+<div class="row">
+    <div class="col-4 card shadow">
+        <div class="card-body">
+            <img class="card-img-top" />
+            <h5>@Model.UserName</h5>
+            <h5>@Model.Email</h5>
+                <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Действия <span class="caret"></span></button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="ChangePassword" asp-route-name="@Model.UserName">Смена пароля</a>
+                    <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Edit" asp-route-name="@Model.UserName">Редактирование данных</a>
+                    <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="EgitUserRights" asp-route-name="@Model.UserName">Права доступа</a>
+                    <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-name="@Model.UserName">Удалить</a>
+                </div>
+        </div>
+    </div>
+</div>

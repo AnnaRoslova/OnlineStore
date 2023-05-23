@@ -12,5 +12,24 @@ namespace OnlineShopWebApp
         {
             orders.Add(order);
         }
+        public List<Order> GetOrders()
+        {
+            return orders;
+        }
+
+        public Order TryGetByOrderId(Guid orderId)
+        {
+            return orders.FirstOrDefault(x => x.Id == orderId);
+        }
+
+        public void UpdateOrderStatus(Guid orderId, OrderStatuses NewStatus)
+        {
+
+            var order = TryGetByOrderId(orderId);
+            if(order != null)
+            {
+                order.Statuses = NewStatus;
+            }
+        }
     }
 }

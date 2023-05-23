@@ -1,25 +1,32 @@
 ﻿@model List<Product>
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "My Store";
 }
+<form method="post">
+    <div class="btn-group">
+        <input class="form-control" placeholder="Поиск" name="request" />
+        <button class="btn-outline-primary" type="submit" asp-controller="Home" asp-action="Search">найти</button>
+    </div>
+</form>
 <div class="row">
+
     @foreach (var produrt in Model)
     {
-    <div class="col-3 card shadow">
-        <img class="imgStyle" src="@produrt.ImagePath"  alt="изображение товара"/>
-        <div class="card-body">
-            <a class="TextStyle" href="/product/index/@produrt.Id">
-                <h5>@produrt.Name</h5>
-                <h5>@produrt.Cost руб</h5>
-            </a>
-            <a class="btn btn-outline-primary" href="/cart/add?productId=@produrt.Id" role="button">Добавить в корзину</a>
-            <a class="btn btn-outline-primary" href="/compare/add?productId=@produrt.Id" role="button">Сравнить</a>
-            <a class="btn btn-outline-primary" href="/wishlist/add?productId=@produrt.Id" role="button">В избранное</a>
+        <div class="col-3 card shadow">
+            <img class="imgStyle" src="@produrt.ImagePath" alt="изображение товара" />
+            <div class="card-body">
+                <a class="TextStyle" 
+                   asp-area=""
+                   asp-controller="Product"
+                   asp-action="Index"
+                   asp-route-id="@produrt.Id">
+                    <h5>@produrt.Name</h5>
+                    <h5>@produrt.Cost руб</h5>
+                </a>
+                <a class="btn btn-outline-primary" asp-area="" asp-controller="cart" asp-action="Add" asp-route-productId="@produrt.Id" role="button">Добавить в корзину</a>
+                <a class="btn btn-outline-primary" asp-area="" asp-controller="Compare" asp-action="Add" asp-route-productId="@produrt.Id" role="button">Сравнить</a>
+                <a class="btn btn-outline-primary" asp-area="" asp-controller="WishList" asp-action="Add" asp-route-productId="@produrt.Id" role="button">В избранное</a>
+            </div>
         </div>
-    </div>     
     }
-</div>
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>

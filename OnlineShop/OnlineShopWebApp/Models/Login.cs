@@ -1,10 +1,13 @@
-﻿namespace OnlineShopWebApp.Models
+﻿using System.ComponentModel.DataAnnotations;
+namespace OnlineShopWebApp.Models
 {
     public class Login
     {
+        [Required(ErrorMessage = "Это поле обязательно для заполнения.")]
+        [StringLength(25, MinimumLength = 2, ErrorMessage = "Длинна имени должна быть от 2 до 25 символов!")]
         public string UserName { get; set; }
-        public string PassWord { get; set; }
-
+        [Required(ErrorMessage = "Это поле обязательно для заполнения.")]
+        public string Password { get; set; }
         public bool RememberMe { get; set; }
     }
 }

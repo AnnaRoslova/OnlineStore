@@ -1,21 +1,28 @@
-﻿<form method="post">
+﻿@model UserDeliveryInfo
+<form method="post">
 <div class="row">
     <div class="col text-center">
-        <label>Введите ФИО</label>
-        <div>
-            <input type="text" name="name" />
-        </div>
-        <label>Введите адрес</label>
-        <div>
-            <input type="text" name="address"/>
-        </div>
-        <label>Введите телефон</label>
-        <div>
-            <input type="text" name="phone" />
-        </div>
-        <label>Введите E-mail</label>
-        <div>
-            <input type="text" name="email"/>
+        <div asp-validation-summary="All">
+            <label asp-for="Name">Введите ФИО</label>
+            <div>
+                <input asp-for="Name" name="name" />
+                <span asp-validation-for="Name"></span>
+            </div>
+            <label asp-for="Name">Введите адрес</label>
+            <div>
+                <input asp-for="Address" name="address" />
+                <span asp-validation-for="Address"></span>
+            </div>
+            <label asp-for="Phone">Введите телефон</label>
+            <div>
+                <input asp-for="Phone" name="phone" />
+                <span asp-validation-for="Phone"></span>
+            </div>
+            <label asp-for="Email">Введите E-mail</label>
+            <div>
+                <input asp-for="Email" name="email" />
+                <span asp-validation-for="Email"></span>
+            </div>
         </div>
         <br />
         <button class="btn btn-primary" type="submit" asp-controller="Order" asp-action="Buy">Оформить заказ</button>

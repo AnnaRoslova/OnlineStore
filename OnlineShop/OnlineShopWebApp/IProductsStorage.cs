@@ -1,5 +1,4 @@
-﻿using System;
-using OnlineShopWebApp.Models;
+﻿using OnlineShopWebApp.Models;
 using System.Collections.Generic;
 
 namespace OnlineShopWebApp
@@ -11,5 +10,6 @@ namespace OnlineShopWebApp
         void ProductDelete(Product product);
         Product TryGetById(int id);
         void Update(Product product);
+        List<Product> SearchName(string request);
     }
 }

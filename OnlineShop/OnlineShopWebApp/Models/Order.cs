@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace OnlineShopWebApp.Models
 {
@@ -10,9 +11,22 @@ namespace OnlineShopWebApp.Models
 
         public List<CartItem> Items { get; set; }
 
+        public DateTime CreateDateTime { get; set; } 
+
+        public OrderStatuses Statuses { get; set; }
+        public decimal Cost
+        {
+            get
+            {
+                return Items?.Sum(x => x.Cost) ?? 0;
+            }
+        }
+
         public Order()
         {
             Id = Guid.NewGuid();
+            CreateDateTime = DateTime.Now;
+            Statuses = OrderStatuses.Created;
         }
     }
 }
