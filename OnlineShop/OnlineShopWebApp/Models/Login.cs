@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 namespace OnlineShopWebApp.Models
 {
     public class Login
@@ -8,6 +9,7 @@ namespace OnlineShopWebApp.Models
         public string UserName { get; set; }
         [Required(ErrorMessage = "Это поле обязательно для заполнения.")]
         public string Password { get; set; }
+        [ValidateNever]
         public bool RememberMe { get; set; }
     }
 }
