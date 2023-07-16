@@ -3,19 +3,22 @@ for details on configuring this project to bundle and minify static web assets. 
 .carousel-img {
     display: inline-block;
 }
-
+.cardStyle{
+    font-family: serif;
+    font-size:30px;
+}
 .bg-color-in-carousel {
-    background-color: #EDFAFA;
+    background-color: #CCDEEB;
 }
 
 .link-in-carousel {
     font-family: serif;
     font-size: 20px;
-    color: #2AA4A4;
+    color: #659BC2;
 }
 
     .link-in-carousel:hover {
-        color: #2AA4A4;
+        color: #659BC2;
     }
 
 .navbar-brand {

@@ -35,30 +35,29 @@
         </div>
     </div>
 </div>
-<form method="post">
-    <div class="btn-group">
-        <input class="form-control" placeholder="Поиск" name="request" />
-        <button class="btn-outline-primary" type="submit" asp-controller="Home" asp-action="Search">найти</button>
-    </div>
-</form>
-<div class="row">
+<div class="row m-lg-4">
 
     @foreach (var produrt in Model)
     {
-        <div class="col-3 card shadow">
-            <img class="imgStyle" src="@produrt.ImagePath" alt="изображение товара" />
-            <div class="card-body">
-                <a class="TextStyle"
-                   asp-area=""
-                   asp-controller="Product"
-                   asp-action="Index"
-                   asp-route-id="@produrt.Id">
-                    <h5>@produrt.Name</h5>
-                    <h5>@produrt.Cost руб</h5>
-                </a>
-                <a class="btn btn-outline-primary" asp-area="" asp-controller="cart" asp-action="Add" asp-route-productId="@produrt.Id" role="button">Добавить в корзину</a>
-                <a class="btn btn-outline-primary" asp-area="" asp-controller="Compare" asp-action="Add" asp-route-productId="@produrt.Id" role="button">Сравнить</a>
-                <a class="btn btn-outline-primary" asp-area="" asp-controller="WishList" asp-action="Add" asp-route-productId="@produrt.Id" role="button">В избранное</a>
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card cardStyle h-100 box-shadow">
+                <img class="h-100" src="@produrt.ImagePath" alt="изображение товара" />
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a asp-area=""
+                           asp-controller="Product"
+                           asp-action="Index"
+                           asp-route-id="@produrt.Id">
+                            @produrt.Name
+                        </a>
+                    </h4>
+                    <h5>@produrt.Cost &#8381;</h5>
+                </div>
+                <div class="d-flex align-items-end">
+                    <a asp-area="" asp-controller="cart" asp-action="Add" asp-route-productId="@produrt.Id" role="button"><img src="~/images/korzina.png" width="30" height="30" /></a>
+                    <a asp-area="" asp-controller="Compare" asp-action="Add" asp-route-productId="@produrt.Id" role="button"><img src="~/images/compare.png" width="30" height="30" /></a>
+                    <a asp-area="" asp-controller="WishList" asp-action="Add" asp-route-productId="@produrt.Id" role="button"><img src="~/images/wishlist.png" width="30" height="30" /></a>
+                </div>
             </div>
         </div>
     }
