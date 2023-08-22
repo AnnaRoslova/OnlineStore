@@ -1,10 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 namespace OnlineShopWebApp.Models
 {
-    public class Product
+    public class ProductViewModel
     {
-        private static int instanceCounter = 0;
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required(ErrorMessage ="Введите стоимость товара.")]
         public decimal Cost { get; set; }
         [Required(ErrorMessage = "Введите название товара.")]
@@ -23,37 +23,5 @@ namespace OnlineShopWebApp.Models
         public string Manufactured { get; set; }
         [Required(ErrorMessage = "Добавьте изображение.")]
         public string ImagePath { get; set; }
-
-
-        public Product()
-        {
-            Id = instanceCounter;
-            Id = instanceCounter++;
-        }
-        public Product(decimal cost, string name, string description, string color, string compound, string manufactured, string imagePath): this()
-        {
-            Cost = cost;
-            Name = name;
-            Description = description;
-            Color = color;
-            Compound = compound;
-            Manufactured = manufactured;
-            ImagePath = imagePath;
-        }
-        public Product(int id, decimal cost, string name, string description, string color, string compound, string manufactured, string imagePath)
-        {
-            Id = id;
-            Cost = cost;
-            Name = name;
-            Description = description;
-            Color = color;
-            Compound = compound;
-            Manufactured = manufactured;
-            ImagePath = imagePath;
-        }
-        public override string ToString()
-        {
-            return $"{Id}\n{Name}\n{Cost}";
-        }
     }
 }

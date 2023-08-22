@@ -14,7 +14,7 @@ namespace OnlineShopWebApp
             return carts.FirstOrDefault(x => x.UserId == userId);
         }
 
-        public void Add(Product product, string userid)
+        public void Add(ProductViewModel product, string userid)
         {
             var existingCart = TryGetBuUserId(userid);
             if (existingCart == null)
@@ -55,7 +55,7 @@ namespace OnlineShopWebApp
 
         }
 
-        public void DecreaseAmount(int productid, string userid)
+        public void DecreaseAmount(Guid productid, string userid)
         {
             var existingCart = TryGetBuUserId(userid);
             if (existingCart == null)

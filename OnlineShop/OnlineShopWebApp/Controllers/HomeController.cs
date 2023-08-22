@@ -1,5 +1,9 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
+using OnlineShop.Db;
 using OnlineShopWebApp.Models;
 
 namespace OnlineShopWebApp.Controllers
@@ -29,7 +33,23 @@ namespace OnlineShopWebApp.Controllers
             var cart = cartsRepository.TryGetBuUserId(user.UserId);
             ViewBag.productCount = cart?.Amount;
             var products = productsStorage.GetProducts();
-            return View(products);
+            var productsViewModels = new List<ProductViewModel>();
+            foreach (var product in products)
+            {
+                var productViewModel = new ProductViewModel
+                {
+                    Id = product.Id,
+                    Cost = product.Cost,
+                    Name = product.Name,
+                    Description = product.Description,
+                    Color = product.Color,
+                    Compound = product.Compound,
+                    Manufactured = product.Manufactured,
+                    ImagePath = product.ImagePath
+                };
+                productsViewModels.Add(productViewModel);
+            }
+            return View(productsViewModels);
         }
     }
 }

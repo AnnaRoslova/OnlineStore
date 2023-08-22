@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
+using OnlineShop.Db;
+
 namespace OnlineShopWebApp.Controllers
 {
     public class CompareController : Controller
@@ -20,10 +22,10 @@ namespace OnlineShopWebApp.Controllers
             var Compare = compareInMemoryRepository.TryGetBuUserId(user.UserId);
             return View(Compare);
         }
-        public IActionResult Add(int productid)
+        public IActionResult Add(Guid productid)
         {
             var product = productsStorage.TryGetById(productid);
-            compareInMemoryRepository.Add(product, user.UserId);
+            //compareInMemoryRepository.Add(product, user.UserId);
             return RedirectToAction("Index");
         }
         public IActionResult Clear(User user)
@@ -31,7 +33,7 @@ namespace OnlineShopWebApp.Controllers
             compareInMemoryRepository.Clear(user.UserId);
             return RedirectToAction("Index");
         }
-        public IActionResult Delete(int productid)
+        public IActionResult Delete(Guid productid)
         {
             compareInMemoryRepository.Delete(productid, user.UserId);
             return RedirectToAction("Index");

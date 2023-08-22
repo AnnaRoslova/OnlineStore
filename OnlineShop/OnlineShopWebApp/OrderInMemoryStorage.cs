@@ -26,7 +26,7 @@ namespace OnlineShopWebApp
         {
 
             var order = TryGetByOrderId(orderId);
-            if(order != null)
+            if (order != null)
             {
                 order.Statuses = NewStatus;
             }

@@ -14,7 +14,7 @@ namespace OnlineShopWebApp
         {
             return wishLists.FirstOrDefault(x => x.UserId == userId);
         }
-        public void Add(Product product, string userid)
+        public void Add(ProductViewModel product, string userid)
         {
             var existingWishList = TryGetBuUserId(userid);
             if (existingWishList == null)
@@ -23,7 +23,7 @@ namespace OnlineShopWebApp
                 {
                     Id = Guid.NewGuid(),
                     UserId = userid,
-                    productsWishList = new List<Product>
+                    productsWishList = new List<ProductViewModel>
                     {
                         product
                     }
@@ -45,7 +45,7 @@ namespace OnlineShopWebApp
             var existingWishList = TryGetBuUserId(userid);
             wishLists.Remove(existingWishList);
         }
-        public void Delete(int productid, string userid)
+        public void Delete(Guid productid, string userid)
         {
             var existingWishList = TryGetBuUserId(userid);
             if (existingWishList == null)

@@ -8,6 +8,6 @@ namespace OnlineShopWebApp.Models
         public Guid Id { get; set; }
         public string UserId { get; set; }
 
-        public List<Product> productsWishList { get; set; }
+        public List<ProductViewModel> productsWishList { get; set; }
     }
 }

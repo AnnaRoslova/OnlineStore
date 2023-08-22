@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
+using OnlineShop.Db;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -21,10 +22,10 @@ namespace OnlineShopWebApp.Controllers
             var Wishlist = wishListInMemoryRepository.TryGetBuUserId(user.UserId);
             return View(Wishlist);
         }
-        public IActionResult Add(int productid)
+        public IActionResult Add(Guid productid)
         {
             var product = productsStorage.TryGetById(productid);
-            wishListInMemoryRepository.Add(product, user.UserId);
+            //wishListInMemoryRepository.Add(product, user.UserId);
             return RedirectToAction("Index");
         }
         public IActionResult Clear(User user)
@@ -32,7 +33,7 @@ namespace OnlineShopWebApp.Controllers
             wishListInMemoryRepository.Clear(user.UserId);
             return RedirectToAction("Index");
         }
-        public IActionResult Delete(int productid)
+        public IActionResult Delete(Guid productid)
         {
             wishListInMemoryRepository.Delete(productid, user.UserId);
             return RedirectToAction("Index");

@@ -1,14 +1,14 @@
-﻿using OnlineShopWebApp.Models;
+﻿using System;
 using System.Collections.Generic;
 
-namespace OnlineShopWebApp
+namespace OnlineShop.Db
 {
     public interface IProductsStorage
     {
         void AddProduct(Product product);
         List<Product> GetProducts();
         void ProductDelete(Product product);
-        Product TryGetById(int id);
+        Product TryGetById(Guid id);
         void Update(Product product);
         List<Product> SearchName(string request);
     }

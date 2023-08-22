@@ -13,7 +13,7 @@ namespace OnlineShopWebApp
         {
             return compares.FirstOrDefault(x => x.UserId == userId);
         }
-        public void Add(Product product, string userid)
+        public void Add(ProductViewModel product, string userid)
         {
             var existingCompare = TryGetBuUserId(userid);
             if (existingCompare == null)
@@ -22,7 +22,7 @@ namespace OnlineShopWebApp
                 {
                     Id = Guid.NewGuid(),
                     UserId = userid,
-                    productsCompare = new List<Product> 
+                    productsCompare = new List<ProductViewModel> 
                     {
                         product
                     }
@@ -44,7 +44,7 @@ namespace OnlineShopWebApp
             var existingCart = TryGetBuUserId(userid);
             compares.Remove(existingCart);
         }
-          public void Delete(int productid, string userid)
+          public void Delete(Guid productid, string userid)
         {
             var existingCompare = TryGetBuUserId(userid);
             if (existingCompare == null)
