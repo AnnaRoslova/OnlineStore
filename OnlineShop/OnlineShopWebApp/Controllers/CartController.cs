@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db;
+using OnlineShopWebApp.Models;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -17,16 +18,26 @@ namespace OnlineShopWebApp.Controllers
             this.cartsInMemoryRepository = cartsInMemoryRepository;
         }
         public IActionResult Index()
-        {   
+        {
             var cart = cartsInMemoryRepository.TryGetBuUserId(user.UserId);
             return View(cart);
         }
-        public IActionResult Add (Guid productid)
+        public IActionResult Add(Guid productid)
         {
             var product = productsStorage.TryGetById(productid);
-
-            //cartsInMemoryRepository.Add(product, user.UserId);
-            return RedirectToAction("Index"); 
+            var productViewModel = new ProductViewModel
+            {
+                Color = product.Color,
+                Name = product.Name,
+                Description = product.Description,
+                Compound = product.Compound,
+                Cost = product.Cost,
+                Id = product.Id,
+                ImagePath = product.ImagePath,
+                Manufactured = product.Manufactured
+            };
+            cartsInMemoryRepository.Add(productViewModel, user.UserId);
+            return RedirectToAction("Index");
         }
         public IActionResult DecreaseAmount(Guid productid)
         {
