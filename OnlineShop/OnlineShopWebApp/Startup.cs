@@ -25,11 +25,11 @@ namespace OnlineShopWebApp
             services.AddSingleton<IWishListRepository, WishListInMemoryRepository>();
             services.AddSingleton<ICompareRepository, CompareInMemoryRepository>();
             services.AddSingleton<IOrdersRepository, OrdersInMemoryRepository>();
-            services.AddSingleton<ICartsRepository, CartsInMemoryRepository>();
-            services.AddSingleton<User>();
+            services.AddTransient<ICartsRepository, CartsDbRepository>();
+            services.AddTransient<User>();
             services.AddTransient<IProductsStorage, ProductsDbStorage>();
             services.AddSingleton<IRolesRepository, RolesInMemoryRepository>();
-            services.AddSingleton<IUserManeger, UsersManeger>();
+            services.AddTransient<IUserManeger, UsersManeger>();
             services.AddControllersWithViews();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
