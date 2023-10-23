@@ -1,39 +1,41 @@
-﻿using OnlineShopWebApp.Models;
+﻿using OnlineShop.Db;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace OnlineShopWebApp
 {
-    public class CartsInMemoryRepository : ICartsRepository
+    public class CartsDbRepository : ICartsRepository
     {
-        private List<Cart> carts = new List<Cart>();
+        private readonly DatabaseContext _dbContext;
 
-        public Cart TryGetBuUserId(string userId)
+        public CartsDbRepository(DatabaseContext dbContext)
         {
-            return carts.FirstOrDefault(x => x.UserId == userId);
+            _dbContext = dbContext;
+        }
+        public Cart TryGetBuUserId(string userId)
+        {   
+            return _dbContext.Carts.FirstOrDefault(x => x.UserId == userId);
         }
 
-        public void Add(ProductViewModel product, string userid)
+        public void Add(Product product, string userid)
         {
             var existingCart = TryGetBuUserId(userid);
             if (existingCart == null)
             {
                 var newCart = new Cart
                 {
-                    Id = Guid.NewGuid(),
                     UserId = userid,
                     Items = new List<CartItem>
                     {
                         new CartItem
                         {
-                            Id = Guid.NewGuid(),
                             Amount = 1,
                             Product = product
                         }
                     }
                 };
-                carts.Add(newCart);
+                _dbContext.Carts.Add(newCart);
             }
             else
             {
@@ -46,13 +48,12 @@ namespace OnlineShopWebApp
                 {
                     existingCart.Items.Add(new CartItem
                     {
-                        Id = Guid.NewGuid(),
                         Amount = 1,
                         Product = product
                     });
                 }
             }
-
+            _dbContext.SaveChanges();
         }
 
         public void DecreaseAmount(Guid productid, string userid)
@@ -71,17 +72,19 @@ namespace OnlineShopWebApp
                 }
 
                 existingCartItem.Amount -= 1;
-                if(existingCartItem.Amount == 0)
+                if (existingCartItem.Amount == 0)
                 {
                     existingCart.Items.Remove(existingCartItem);
                 }
             }
+            _dbContext.SaveChanges();
         }
 
         public void Clear(string userid)
         {
             var existingCart = TryGetBuUserId(userid);
-            carts.Remove(existingCart);
+            _dbContext.Carts.Remove(existingCart);
+            _dbContext.SaveChanges();
         }
     }
 }

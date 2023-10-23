@@ -25,18 +25,18 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Add(Guid productid)
         {
             var product = productsStorage.TryGetById(productid);
-            var productViewModel = new ProductViewModel
+            var productDB = new Product
             {
                 Color = product.Color,
                 Name = product.Name,
                 Description = product.Description,
-                Compound = product.Compound,
+                Compound = product.Compound,    
                 Cost = product.Cost,
                 Id = product.Id,
                 ImagePath = product.ImagePath,
                 Manufactured = product.Manufactured
             };
-            cartsInMemoryRepository.Add(productViewModel, user.UserId);
+            cartsInMemoryRepository.Add(productDB, user.UserId);
             return RedirectToAction("Index");
         }
         public IActionResult DecreaseAmount(Guid productid)

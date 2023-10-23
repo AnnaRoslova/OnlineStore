@@ -9,7 +9,7 @@ namespace OnlineShopWebApp.Models
         public Guid Id { get; set; }
         public UserDeliveryInfo User { get; set; }
 
-        public List<CartItem> Items { get; set; }
+        public List<CartItemViewModel> Items { get; set; }
 
         public DateTime CreateDateTime { get; set; } 
 
