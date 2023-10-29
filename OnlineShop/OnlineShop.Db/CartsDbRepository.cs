@@ -1,4 +1,5 @@
-﻿using OnlineShop.Db;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineShop.Db;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,28 +14,30 @@ namespace OnlineShopWebApp
         {
             _dbContext = dbContext;
         }
-        public Cart TryGetBuUserId(string userId)
-        {   
-            return _dbContext.Carts.FirstOrDefault(x => x.UserId == userId);
+        public Cart TryGetByUserId(string userId)
+        {
+            return _dbContext.Carts.Include(x => x.Items).ThenInclude(x => x.Product).FirstOrDefault(x => x.UserId == userId);
         }
 
         public void Add(Product product, string userid)
         {
-            var existingCart = TryGetBuUserId(userid);
+            var existingCart = TryGetByUserId(userid);
             if (existingCart == null)
             {
                 var newCart = new Cart
                 {
                     UserId = userid,
-                    Items = new List<CartItem>
+                };
+
+                newCart.Items = new List<CartItem>
                     {
                         new CartItem
                         {
                             Amount = 1,
-                            Product = product
+                            Product = product,
+                            Cart = newCart
                         }
-                    }
-                };
+                    };
                 _dbContext.Carts.Add(newCart);
             }
             else
@@ -49,7 +52,8 @@ namespace OnlineShopWebApp
                     existingCart.Items.Add(new CartItem
                     {
                         Amount = 1,
-                        Product = product
+                        Product = product,
+                        Cart = existingCart
                     });
                 }
             }
@@ -58,7 +62,7 @@ namespace OnlineShopWebApp
 
         public void DecreaseAmount(Guid productid, string userid)
         {
-            var existingCart = TryGetBuUserId(userid);
+            var existingCart = TryGetByUserId(userid);
             if (existingCart == null)
             {
                 return;
@@ -82,7 +86,7 @@ namespace OnlineShopWebApp
 
         public void Clear(string userid)
         {
-            var existingCart = TryGetBuUserId(userid);
+            var existingCart = TryGetByUserId(userid);
             _dbContext.Carts.Remove(existingCart);
             _dbContext.SaveChanges();
         }
