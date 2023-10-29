@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace OnlineShopWebApp.Helpers
 {
-    public class Mapping
+    public static class Mapping
     {
         public static ProductViewModel ToProductViewModel(Product product)
         {
@@ -27,6 +27,34 @@ namespace OnlineShopWebApp.Helpers
                 productsViewModels.Add(ToProductViewModel(product));
             }
             return productsViewModels;
+        }
+        public static CartViewModel ToCartItemViewModel(Cart cart)
+        {
+            if (cart == null)
+            {
+                return null;
+            }
+            return new CartViewModel
+            {
+                Id = cart.Id,
+                UserId = cart.UserId,
+                Items = ToCartItemViewModels(cart.Items)
+            };
+        }
+        public static List<CartItemViewModel> ToCartItemViewModels(List<CartItem> cartDbItems)
+        {
+            var cartItems = new List<CartItemViewModel>();
+            foreach (var cartDbItem in cartDbItems)
+            {
+                var cartItemViewModel = new CartItemViewModel
+                {
+                    Id = cartDbItem.Id,
+                    Amount = cartDbItem.Amount,
+                    Product = ToProductViewModel(cartDbItem.Product)
+                };
+                cartItems.Add(cartItemViewModel);
+            }
+            return cartItems;
         }
     }
 }

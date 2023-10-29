@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
 
 namespace OnlineShopWebApp.Controllers
@@ -21,11 +22,12 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult Buy(User user, UserDeliveryInfo userDeliveryInfo)
         {
-            var existingcart = cartsInMemoryRepository.TryGetBuUserId(user.UserId);
+            var existingcart = cartsInMemoryRepository.TryGetByUserId(user.UserId);
+            var existingCartViewModel = Mapping.ToCartItemViewModel(existingcart);
             var order = new Order
             {
                 User = userDeliveryInfo,
-                Items = existingcart.Items
+                Items = existingCartViewModel.Items
             };
             ordersRepository.Add(order);
             cartsInMemoryRepository.Clear(user.UserId);

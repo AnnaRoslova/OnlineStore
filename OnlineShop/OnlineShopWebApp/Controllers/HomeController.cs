@@ -4,6 +4,7 @@ using System.Drawing;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using OnlineShop.Db;
+using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
 
 namespace OnlineShopWebApp.Controllers
@@ -24,30 +25,28 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Search(string request)
         {
             var productSearch = productsStorage.SearchName(request);
+
             if (productSearch.Count == 0)
+
                 return RedirectToAction("Index", "Home");
+
             return View("index", productSearch);
         }
         public IActionResult Index()
         {
-            var cart = cartsRepository.TryGetBuUserId(user.UserId);
-            ViewBag.productCount = cart?.Amount;
+            var cart = cartsRepository.TryGetByUserId(user.UserId);
+
+            var cartViewModel = Mapping.ToCartItemViewModel(cart);
+
+            ViewBag.productCount = cartViewModel?.Amount;
+
             var products = productsStorage.GetProducts();
+
             var productsViewModels = new List<ProductViewModel>();
+
             foreach (var product in products)
             {
-                var productViewModel = new ProductViewModel
-                {
-                    Id = product.Id,
-                    Cost = product.Cost,
-                    Name = product.Name,
-                    Description = product.Description,
-                    Color = product.Color,
-                    Compound = product.Compound,
-                    Manufactured = product.Manufactured,
-                    ImagePath = product.ImagePath
-                };
-                productsViewModels.Add(productViewModel);
+                productsViewModels.Add(Mapping.ToProductViewModel(product));
             }
             return View(productsViewModels);
         }
