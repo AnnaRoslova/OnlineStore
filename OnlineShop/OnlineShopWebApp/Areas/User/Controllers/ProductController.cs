@@ -4,6 +4,7 @@ using System;
 
 namespace OnlineShopWebApp.Controllers
 {
+    [Area("User")]
     public class ProductController : Controller
     {
         private readonly IProductsStorage productsStorage;

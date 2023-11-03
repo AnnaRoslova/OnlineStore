@@ -9,6 +9,7 @@ using OnlineShopWebApp.Models;
 
 namespace OnlineShopWebApp.Controllers
 {
+    [Area("User")]
     public class HomeController : Controller
     {
         private readonly IProductsStorage productsStorage;
