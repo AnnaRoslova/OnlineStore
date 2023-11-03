@@ -6,6 +6,7 @@ using OnlineShopWebApp.Models;
 
 namespace OnlineShopWebApp.Controllers
 {
+    [Area("User")]
     public class CartController : Controller
     {
         readonly User user;

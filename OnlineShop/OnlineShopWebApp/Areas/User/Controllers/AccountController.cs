@@ -4,6 +4,7 @@ using OnlineShopWebApp.Areas.Admin.Models;
 
 namespace OnlineShopWebApp.Controllers
 {
+    [Area("User")]
     public class AccountController : Controller
     {
         private readonly IUserManeger users;

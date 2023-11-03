@@ -4,6 +4,7 @@ using OnlineShopWebApp.Models;
 
 namespace OnlineShopWebApp.Controllers
 {
+    [Area("User")]
     public class OrderController : Controller
     {
         private readonly ICartsRepository cartsInMemoryRepository;

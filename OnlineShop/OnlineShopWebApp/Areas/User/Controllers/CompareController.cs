@@ -4,38 +4,39 @@ using OnlineShop.Db;
 
 namespace OnlineShopWebApp.Controllers
 {
-    public class WishListController : Controller
+    [Area("User")]
+    public class CompareController : Controller
     {
         private readonly IProductsStorage productsStorage;
-        private readonly IWishListRepository wishListInMemoryRepository;
+        private readonly ICompareRepository compareInMemoryRepository;
         private readonly User user;
 
-        public WishListController(IProductsStorage productsStorage, User user, IWishListRepository wishListInMemoryRepository = null)
+        public CompareController(IProductsStorage productsStorage, User user, ICompareRepository compareInMemoryRepository = null)
         {
             this.productsStorage = productsStorage;
             this.user = user;
-            this.wishListInMemoryRepository = wishListInMemoryRepository;
+            this.compareInMemoryRepository = compareInMemoryRepository;
         }
 
         public IActionResult Index()
         {
-            var Wishlist = wishListInMemoryRepository.TryGetBuUserId(user.UserId);
-            return View(Wishlist);
+            var Compare = compareInMemoryRepository.TryGetBuUserId(user.UserId);
+            return View(Compare);
         }
         public IActionResult Add(Guid productid)
         {
             var product = productsStorage.TryGetById(productid);
-            //wishListInMemoryRepository.Add(product, user.UserId);
+            //compareInMemoryRepository.Add(product, user.UserId);
             return RedirectToAction("Index");
         }
         public IActionResult Clear(User user)
         {
-            wishListInMemoryRepository.Clear(user.UserId);
+            compareInMemoryRepository.Clear(user.UserId);
             return RedirectToAction("Index");
         }
         public IActionResult Delete(Guid productid)
         {
-            wishListInMemoryRepository.Delete(productid, user.UserId);
+            compareInMemoryRepository.Delete(productid, user.UserId);
             return RedirectToAction("Index");
         }
     }
