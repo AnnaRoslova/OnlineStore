@@ -21,6 +21,8 @@ namespace OnlineShopWebApp.Helpers
         }
         public static List<ProductViewModel> productViewModels(List<Product> products)
         {
+            if(products == null || products.Count == 0) 
+                return new List<ProductViewModel>();
             var productsViewModels = new List<ProductViewModel>();
             foreach (var product in products)
             {
@@ -58,3 +60,4 @@ namespace OnlineShopWebApp.Helpers
         }
     }
 }
+

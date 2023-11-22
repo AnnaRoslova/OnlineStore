@@ -23,5 +23,6 @@ namespace OnlineShop.Db
         public string ImagePath { get; set; }
 
         public List<CartItem> CartItems { get; set; }
+        public WishList WishList { get; set; }
     }
 }

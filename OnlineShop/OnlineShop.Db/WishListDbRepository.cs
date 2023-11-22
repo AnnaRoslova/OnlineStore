@@ -1,35 +1,40 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using OnlineShopWebApp.Models;
 using System.Threading.Tasks;
 
-namespace OnlineShopWebApp
+namespace OnlineShop.Db
 {
-    public class WishListInMemoryRepository : IWishListRepository
+    public class WishListDbRepository : IWishListRepository
     {
-        private readonly List<WishList> wishLists = new List<WishList>();
+        private readonly DatabaseContext _databaseContext;
 
-        public WishList TryGetBuUserId(string userId)
+        public WishListDbRepository(DatabaseContext databaseContext)
         {
-            return wishLists.FirstOrDefault(x => x.UserId == userId);
+            _databaseContext = databaseContext;
+        }   
+
+        public WishList TryGetByUserId(string userId)
+        {
+            return _databaseContext.WishLists.Include(x=>x.productsWishList).FirstOrDefault(x => x.UserId == userId);
         }
-        public void Add(ProductViewModel product, string userid)
+        public void Add(Product product, string userid)
         {
-            var existingWishList = TryGetBuUserId(userid);
+            var existingWishList = TryGetByUserId(userid);
             if (existingWishList == null)
             {
                 WishList newWishlist = new WishList
                 {
-                    Id = Guid.NewGuid(),
                     UserId = userid,
-                    productsWishList = new List<ProductViewModel>
+                    productsWishList = new List<Product>
                     {
                         product
                     }
 
                 };
-                wishLists.Add(newWishlist);
+                _databaseContext.WishLists.Add(newWishlist);
+                _databaseContext.SaveChanges();
             }
             else
             {
@@ -37,17 +42,19 @@ namespace OnlineShopWebApp
                 if (existingWishListProduct == null)
                 {
                     existingWishList.productsWishList.Add(product);
+                    _databaseContext.SaveChanges();
                 }
             }
         }
         public void Clear(string userid)
         {
-            var existingWishList = TryGetBuUserId(userid);
-            wishLists.Remove(existingWishList);
+            var existingWishList = TryGetByUserId(userid);
+            _databaseContext.WishLists.Remove(existingWishList);
+            _databaseContext.SaveChanges();
         }
         public void Delete(Guid productid, string userid)
         {
-            var existingWishList = TryGetBuUserId(userid);
+            var existingWishList = TryGetByUserId(userid);
             if (existingWishList == null)
             {
                 return;
@@ -62,6 +69,7 @@ namespace OnlineShopWebApp
                 else
                 {
                     existingWishList.productsWishList.Remove(existingWishListProduct);
+                    _databaseContext.SaveChanges();
                 }
 
             }
