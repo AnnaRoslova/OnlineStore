@@ -7,6 +7,7 @@ namespace OnlineShop.Db
         public DbSet<Product> products { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<WishList> WishLists { get; set; }
+        public DbSet<Compare> Compares { get; set; }
         public DatabaseContext(DbContextOptions<DatabaseContext> options): base(options)
         {
             Database.EnsureCreated();

@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db;
+using OnlineShopWebApp.Helpers;
+using OnlineShopWebApp.Models;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -11,7 +13,7 @@ namespace OnlineShopWebApp.Controllers
         private readonly ICompareRepository compareInMemoryRepository;
         private readonly User user;
 
-        public CompareController(IProductsStorage productsStorage, User user, ICompareRepository compareInMemoryRepository = null)
+        public CompareController(IProductsStorage productsStorage, User user, ICompareRepository compareInMemoryRepository)
         {
             this.productsStorage = productsStorage;
             this.user = user;
@@ -21,12 +23,18 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index()
         {
             var Compare = compareInMemoryRepository.TryGetBuUserId(user.UserId);
-            return View(Compare);
+            var CompareToViewModel = new CompareViewModel 
+            { 
+                Id = Compare.Id,
+                UserId = user.UserId,
+                productsCompare = Mapping.productViewModels(Compare.productsCompare)
+            };
+            return View(CompareToViewModel);
         }
         public IActionResult Add(Guid productid)
         {
             var product = productsStorage.TryGetById(productid);
-            //compareInMemoryRepository.Add(product, user.UserId);
+            compareInMemoryRepository.Add(product, user.UserId);
             return RedirectToAction("Index");
         }
         public IActionResult Clear(User user)

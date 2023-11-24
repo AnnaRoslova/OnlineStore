@@ -1,4 +1,4 @@
-﻿@model Compare
+﻿@model CompareViewModel
 
 @if (Model == null)
 {
@@ -33,15 +33,15 @@ else
                         <td>@product.Manufactured</td>
                         <td>@product.Compound</td>
                         <td>@product.Description</td>
-                        <td><a class="btn btn-outline-primary" href="/cart/add?productId=@product.Id" role="button">Добавить в корзину</a></td>
-                        <td><a class="btn btn-outline-primary" href="/compare/delete?productId=@product.Id" role="button">удалить из списка</a></td>
+                        <td><a class="btn btn-outline-primary" href="cart/add?productId=@product.Id" role="button">Добавить в корзину</a></td>
+                        <td><a class="btn btn-outline-primary" href="compare/delete?productId=@product.Id" role="button">удалить из списка</a></td>
                     </tr>
                     }
                 </tbody>
             </table>
             <div class="text-center">
-                <a class="btn btn-primary" href="/home/index" role="button">В каталог</a>
-                <a class="btn btn-danger" href="/compare/clear" role="button">Очистить список</a>
+                <a class="btn btn-primary" href="home/index" role="button">В каталог</a>
+                <a class="btn btn-danger" href="compare/clear" role="button">Очистить список</a>
             </div>
         </div>
     </div>
