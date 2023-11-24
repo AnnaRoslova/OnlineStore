@@ -1,50 +1,57 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using OnlineShopWebApp.Models;
 
-namespace OnlineShopWebApp
+namespace OnlineShop.Db
 {
-    public class CompareInMemoryRepository : ICompareRepository
+    public class CompareDbRepository : ICompareRepository
     {
-        private readonly List<Compare> compares = new List<Compare>();
+        private readonly DatabaseContext dbContext;
+        public CompareDbRepository(DatabaseContext dbContext)
+        {
+            this.dbContext = dbContext;
+        }
 
         public Compare TryGetBuUserId(string userId)
         {
-            return compares.FirstOrDefault(x => x.UserId == userId);
+            var compare = dbContext.Compares.Include(x => x.productsCompare).FirstOrDefault(x => x.UserId == userId);
+            return compare;
         }
-        public void Add(ProductViewModel product, string userid)
+        public void Add(Product product, string userid)
         {
             var existingCompare = TryGetBuUserId(userid);
             if (existingCompare == null)
             {
                 Compare newCompare = new Compare
                 {
-                    Id = Guid.NewGuid(),
                     UserId = userid,
-                    productsCompare = new List<ProductViewModel> 
+                    productsCompare = new List<Product>
                     {
                         product
                     }
 
                 };
-                compares.Add(newCompare);
+                dbContext.Compares.Add(newCompare);
+                dbContext.SaveChanges();
             }
             else
             {
                 var existingCompareProduct = existingCompare.productsCompare.FirstOrDefault(x => x.Id == product.Id);
-                if(existingCompareProduct == null)
+                if (existingCompareProduct == null)
                 {
                     existingCompare.productsCompare.Add(product);
+                    dbContext.SaveChanges();
                 }
             }
         }
         public void Clear(string userid)
         {
             var existingCart = TryGetBuUserId(userid);
-            compares.Remove(existingCart);
+            dbContext.Compares.Remove(existingCart);
+            dbContext.SaveChanges();
         }
-          public void Delete(Guid productid, string userid)
+        public void Delete(Guid productid, string userid)
         {
             var existingCompare = TryGetBuUserId(userid);
             if (existingCompare == null)
@@ -62,9 +69,9 @@ namespace OnlineShopWebApp
                 {
                     existingCompare.productsCompare.Remove(existingCompareProduct);
                 }
-             
+
             }
         }
-       
+
     }
 }

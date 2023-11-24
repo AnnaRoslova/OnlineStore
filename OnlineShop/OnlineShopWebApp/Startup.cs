@@ -23,7 +23,7 @@ namespace OnlineShopWebApp
             services.AddDbContext<DatabaseContext>(options =>
                 options.UseSqlServer(connection));
             services.AddTransient<IWishListRepository, WishListDbRepository>();
-            services.AddSingleton<ICompareRepository, CompareInMemoryRepository>();
+            services.AddTransient<ICompareRepository, CompareDbRepository>();
             services.AddSingleton<IOrdersRepository, OrdersInMemoryRepository>();
             services.AddTransient<ICartsRepository, CartsDbRepository>();
             services.AddTransient<User>();

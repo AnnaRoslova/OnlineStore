@@ -24,5 +24,6 @@ namespace OnlineShop.Db
 
         public List<CartItem> CartItems { get; set; }
         public WishList WishList { get; set; }
+        public Compare Compare { get; set; }
     }
 }
