@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using OnlineShopWebApp.Models;
-namespace OnlineShopWebApp
+
+namespace OnlineShop.Db
 {
     public interface IOrdersRepository
     {

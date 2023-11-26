@@ -6,7 +6,6 @@ namespace OnlineShop.Db
         
         public Product Product { get; set; }
         public Cart Cart { get; set; }
-
         public int Amount { get; set; }
     }
 }
