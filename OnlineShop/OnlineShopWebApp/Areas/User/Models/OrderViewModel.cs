@@ -4,16 +4,16 @@ using System.Linq;
 
 namespace OnlineShopWebApp.Models
 {
-    public class Order
+    public class OrderViewModel
     {
         public Guid Id { get; set; }
-        public UserDeliveryInfo User { get; set; }
+        public UserDeliveryInfoViewModel User { get; set; }
 
         public List<CartItemViewModel> Items { get; set; }
 
-        public DateTime CreateDateTime { get; set; } 
+        public DateTime CreateDateTime { get; set; }
 
-        public OrderStatuses Statuses { get; set; }
+        public OrderStatusesViewModel Statuses { get; set; }
         public decimal Cost
         {
             get
@@ -22,11 +22,11 @@ namespace OnlineShopWebApp.Models
             }
         }
 
-        public Order()
+        public OrderViewModel()
         {
             Id = Guid.NewGuid();
             CreateDateTime = DateTime.Now;
-            Statuses = OrderStatuses.Created;
+            Statuses = OrderStatusesViewModel.Created;
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace OnlineShopWebApp.Models
 {
-    public class UserDeliveryInfo
+    public class UserDeliveryInfoViewModel
     {
         [Required(ErrorMessage ="Введите Ваше имя.")]
         [StringLength(25, MinimumLength = 2, ErrorMessage ="Имя должно быть от 2 до 25 символов.")]

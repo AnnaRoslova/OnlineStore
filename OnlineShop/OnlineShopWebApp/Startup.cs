@@ -24,7 +24,7 @@ namespace OnlineShopWebApp
                 options.UseSqlServer(connection));
             services.AddTransient<IWishListRepository, WishListDbRepository>();
             services.AddTransient<ICompareRepository, CompareDbRepository>();
-            services.AddSingleton<IOrdersRepository, OrdersInMemoryRepository>();
+            services.AddTransient<IOrdersRepository, OrdersDbRepository>();
             services.AddTransient<ICartsRepository, CartsDbRepository>();
             services.AddTransient<User>();
             services.AddTransient<IProductsStorage, ProductsDbStorage>();

@@ -1,4 +1,4 @@
-﻿@model Order
+﻿@model OrderViewModel
 <form method="post">
 <div class="row">
     @await Html.PartialAsync("AdminLeftMenu")
@@ -29,7 +29,7 @@
                 <td>
                     <select 
                             asp-for="@Model.Statuses"
-                            asp-items="@Html.GetEnumSelectList<OrderStatuses>()"
+                            asp-items="@Html.GetEnumSelectList<OrderStatusesViewModel>()"
                             class="form-control">
                     </select>
                 </td>
