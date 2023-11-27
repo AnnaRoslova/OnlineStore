@@ -141,6 +141,19 @@ namespace OnlineShop.Db.Migrations
                     b.HasIndex("WishListId");
 
                     b.ToTable("products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("df3f8e2f-91d5-465c-a121-0f25e072b32e"),
+                            Color = "Черный",
+                            Compound = "Кожа",
+                            Cost = 1599m,
+                            Description = "шлейка длямаленьких собак",
+                            ImagePath = "images\\shleika.png",
+                            Manufactured = "Монморанси",
+                            Name = "Шлейка"
+                        });
                 });
 
             modelBuilder.Entity("OnlineShop.Db.UserDeliveryInfo", b =>
