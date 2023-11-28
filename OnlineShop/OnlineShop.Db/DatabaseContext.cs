@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace OnlineShop.Db
 {
@@ -9,9 +10,15 @@ namespace OnlineShop.Db
         public DbSet<WishList> WishLists { get; set; }
         public DbSet<Compare> Compares { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DatabaseContext(DbContextOptions<DatabaseContext> options): base(options)
+        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
             Database.Migrate();
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Product>().HasData(
+                new Product { Id = Guid.NewGuid(), Name = "Шлейка", Color = "Черный", Description = "шлейка длямаленьких собак", Cost = 1599,Compound="Кожа", Manufactured= "Монморанси", ImagePath= "images\\shleika.png" }
+                );
         }
     }
 }
