@@ -22,7 +22,7 @@ namespace OnlineShopWebApp.Controllers
 
         public IActionResult Index()
         {
-            var wishlist = wishListInMemoryRepository.TryGetByUserId(user.UserId);
+            var wishlist = wishListInMemoryRepository.TryGetByUserId(User.Identity.Name);
             var wishListToModel = new WishListViewModel
             {
                 Id = wishlist.Id,
