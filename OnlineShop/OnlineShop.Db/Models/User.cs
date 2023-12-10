@@ -2,7 +2,10 @@
 
 namespace OnlineShop.Db.Models
 {
-    internal class User: IdentityUser
+    public class User: IdentityUser
     {
+        public string UserId = "UserId";
+        public string Phone {  get; set; }
+        public string Password {  get; set; }
     }
 }

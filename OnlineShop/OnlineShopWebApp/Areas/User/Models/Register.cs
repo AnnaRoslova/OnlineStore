@@ -22,5 +22,6 @@ namespace OnlineShopWebApp.Models
         [Required(ErrorMessage = "Поле обязательно для заполнения.")]
         [Compare("Password", ErrorMessage = "Пароли  не совпадают.")]
         public string ConfirmPassword { get; set; }
+        public string ReturnUrl {  get; set; }
     }
 }

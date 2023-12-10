@@ -14,13 +14,11 @@ namespace OnlineShopWebApp.Controllers
     {
         private readonly IProductsStorage productsStorage;
         private readonly ICartsRepository cartsRepository;
-        private readonly User user;
 
-        public HomeController(IProductsStorage productsStorage, ICartsRepository cartsRepository, User user)
+        public HomeController(IProductsStorage productsStorage, ICartsRepository cartsRepository)
         {
             this.productsStorage = productsStorage;
             this.cartsRepository = cartsRepository;
-            this.user = user;
         }
         [HttpPost]
         public IActionResult Search(string request)
@@ -35,7 +33,7 @@ namespace OnlineShopWebApp.Controllers
         }
         public IActionResult Index()
         {
-            var cart = cartsRepository.TryGetByUserId(user.UserId);
+            var cart = cartsRepository.TryGetByUserId(Constants.UserId);
 
             var cartViewModel = Mapping.ToCartItemViewModel(cart);
 

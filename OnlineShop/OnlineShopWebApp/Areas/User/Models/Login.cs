@@ -11,5 +11,6 @@ namespace OnlineShopWebApp.Models
         public string Password { get; set; }
         [ValidateNever]
         public bool RememberMe { get; set; }
+        public string ReturnUrl { get; set; }
     }
 }

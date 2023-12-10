@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db;
 using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
@@ -6,6 +7,7 @@ using OnlineShopWebApp.Models;
 namespace OnlineShopWebApp.Controllers
 {
     [Area("User")]
+    [Authorize]
     public class OrderController : Controller
     {
         private readonly ICartsRepository cartsInMemoryRepository;
@@ -22,16 +24,16 @@ namespace OnlineShopWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Buy(User user, UserDeliveryInfoViewModel userDeliveryInfo)
+        public IActionResult Buy(UserDeliveryInfoViewModel userDeliveryInfo)
         {
-            var existingcart = cartsInMemoryRepository.TryGetByUserId(user.UserId);
+            var existingcart = cartsInMemoryRepository.TryGetByUserId(Constants.UserId);
             var order = new Order
             {
                 User = Mapping.ToUserDeliveryInfo(userDeliveryInfo),
                 Items = existingcart.Items,
             };
             ordersRepository.Add(order);
-            cartsInMemoryRepository.Clear(user.UserId);
+            cartsInMemoryRepository.Clear(Constants.UserId);
             return View();
         }
     }

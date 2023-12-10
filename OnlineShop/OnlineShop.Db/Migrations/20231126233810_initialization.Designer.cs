@@ -13,7 +13,7 @@ namespace OnlineShop.Db.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
     [Migration("20231126233810_initialization")]
-    partial class initialization
+    partial class Initialization
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

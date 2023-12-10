@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db;
+using OnlineShop.Db.Models;
 using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
 
@@ -11,22 +12,20 @@ namespace OnlineShopWebApp.Controllers
     {
         private readonly IProductsStorage productsStorage;
         private readonly ICompareRepository compareInMemoryRepository;
-        private readonly User user;
 
-        public CompareController(IProductsStorage productsStorage, User user, ICompareRepository compareInMemoryRepository)
+        public CompareController(IProductsStorage productsStorage, ICompareRepository compareInMemoryRepository)
         {
             this.productsStorage = productsStorage;
-            this.user = user;
             this.compareInMemoryRepository = compareInMemoryRepository;
         }
 
         public IActionResult Index()
         {
-            var Compare = compareInMemoryRepository.TryGetBuUserId(user.UserId);
+            var Compare = compareInMemoryRepository.TryGetBuUserId(Constants.UserId);
             var CompareToViewModel = new CompareViewModel 
             { 
                 Id = Compare.Id,
-                UserId = user.UserId,
+                UserId = Constants.UserId,
                 productsCompare = Mapping.productViewModels(Compare.productsCompare)
             };
             return View(CompareToViewModel);
@@ -34,17 +33,17 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Add(Guid productid)
         {
             var product = productsStorage.TryGetById(productid);
-            compareInMemoryRepository.Add(product, user.UserId);
+            compareInMemoryRepository.Add(product, Constants.UserId);
             return RedirectToAction("Index");
         }
         public IActionResult Clear(User user)
         {
-            compareInMemoryRepository.Clear(user.UserId);
+            compareInMemoryRepository.Clear(Constants.UserId);
             return RedirectToAction("Index");
         }
         public IActionResult Delete(Guid productid)
         {
-            compareInMemoryRepository.Delete(productid, user.UserId);
+            compareInMemoryRepository.Delete(productid, Constants.UserId);
             return RedirectToAction("Index");
         }
     }

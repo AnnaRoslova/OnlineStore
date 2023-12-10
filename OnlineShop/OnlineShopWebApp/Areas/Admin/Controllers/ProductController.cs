@@ -4,10 +4,13 @@ using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area(Constants.AdminRoleName)]
+    [Authorize(Roles = Constants.AdminRoleName)]
     public class ProductController : Controller
     {
         private readonly IProductsStorage productsStorage;

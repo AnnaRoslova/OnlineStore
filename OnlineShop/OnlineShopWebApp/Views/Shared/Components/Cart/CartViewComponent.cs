@@ -10,17 +10,15 @@ namespace OnlineShopWebApp.Views.Shared.Components.Cart
     {
 
         private readonly ICartsRepository cartsRepository;
-        private readonly User user;
 
-        public CartViewComponent(ICartsRepository cartsRepository, User user = null)
+        public CartViewComponent(ICartsRepository cartsRepository)
         {
             this.cartsRepository = cartsRepository;
-            this.user = user;
         }
 
         public IViewComponentResult Invoke()
         {
-            var cart = cartsRepository.TryGetByUserId(user.UserId);
+            var cart = cartsRepository.TryGetByUserId(User.Identity.Name);
             var cartViewModel = Mapping.ToCartItemViewModel(cart);
             var productCounts = cartViewModel?.Amount??0;
 
