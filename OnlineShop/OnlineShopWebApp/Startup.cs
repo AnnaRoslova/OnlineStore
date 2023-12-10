@@ -6,7 +6,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using OnlineShop.Db;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using System;
+using Microsoft.AspNetCore.Http;
+using OnlineShop.Db.Models;
 
 namespace OnlineShopWebApp
 {
@@ -21,8 +24,25 @@ namespace OnlineShopWebApp
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("online_shop");
+
             services.AddDbContext<DatabaseContext>(options =>
                 options.UseSqlServer(connection));
+
+            services.AddDbContext<IdentityContext>(options =>
+                options.UseSqlServer(connection));
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<IdentityContext>();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromHours(8);
+                options.LoginPath = "/User/Account/Login";
+                options.LogoutPath = "/User/Account/Logout";
+                options.Cookie = new CookieBuilder
+                {
+                    IsEssential = true
+                };
+            });
             services.AddTransient<IWishListRepository, WishListDbRepository>();
             services.AddTransient<ICompareRepository, CompareDbRepository>();
             services.AddTransient<IOrdersRepository, OrdersDbRepository>();
@@ -50,6 +70,7 @@ namespace OnlineShopWebApp
 
             app.UseRouting();
 
+            app.UseAuthorization();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

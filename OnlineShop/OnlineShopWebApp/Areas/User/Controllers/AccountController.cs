@@ -1,61 +1,79 @@
 ﻿using OnlineShopWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Areas.Admin.Models;
+using Microsoft.AspNetCore.Identity;
+using OnlineShop.Db.Models;
+using OnlineShop.Db;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OnlineShopWebApp.Controllers
 {
     [Area("User")]
     public class AccountController : Controller
     {
-        private readonly IUserManeger users;
-
-        public AccountController(IUserManeger users)
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            this.users = users;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl)
         {
-            return View();
+            return View(new Login() { ReturnUrl = returnUrl });
         }
         [HttpPost]
         public IActionResult Login(Login login)
         {
-            if (!ModelState.IsValid)
-                return View(nameof(Login));
-
-            var userAccount = users.TryGetByName(login.UserName);
-            if (userAccount == null)
+            if (ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Пользователь не найден!");
-                return View(nameof(Login));
+                var result = _signInManager.PasswordSignInAsync(login.UserName, login.Password, login.RememberMe, false).Result;
+                if (result.Succeeded)
+                {
+                    return Redirect(login.ReturnUrl);
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Неправильный пароль!");
+                }
             }
-            if (userAccount.Password != login.Password)
-            {
-                ModelState.AddModelError("", "Неверный пароль!");
-                return View(nameof(Login));
-            }
-            return RedirectToAction( nameof(HomeController.Index)   , "Home");
-        }   
-
-        public IActionResult Register()
+            return View("Login", login);
+        }
+        public IActionResult Logout()
         {
-            return View();
+            return View(nameof(HomeController.Index), "Home");
+        }
+
+        public IActionResult Register(string returnUrl)
+        {
+            return View(new Register() { ReturnUrl = returnUrl });
         }
         [HttpPost]
         public IActionResult Register(Register register)
         {
+            if(register.UserName == register.Password)
+            {
+                ModelState.AddModelError("","Логин и пароль совпадают!");
+            }
             if (ModelState.IsValid)
             {
-                users.AddUser(new UserAccount
+                User user = new User { Email = register.Email, UserName = register.UserName, Phone = register.Phone, Password = register.Password };
+
+                var resulst = _userManager.CreateAsync(user, register.Password).Result;
+                if (resulst.Succeeded)
                 {
-                    UserName = register.UserName,
-                    Phone = register.Phone,
-                    Email = register.Email,
-                    Password = register.Password
-                });
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                    _signInManager.SignInAsync(user, false).Wait();
+                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                }
+                else
+                {
+                    foreach (var error in resulst.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
             }
-            return View(nameof(Register));
+            return View(register);
         }
 
     }

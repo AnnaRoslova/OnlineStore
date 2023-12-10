@@ -3,41 +3,43 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db;
 using OnlineShopWebApp.Helpers;
 using OnlineShopWebApp.Models;
+using OnlineShop.Db.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OnlineShopWebApp.Controllers
 {
     [Area("User")]
+    [Authorize]
     public class CartController : Controller
     {
         readonly User user;
         private readonly IProductsStorage productsStorage;
         private readonly ICartsRepository cartsInMemoryRepository;
 
-        public CartController(IProductsStorage productsStorage, User user, ICartsRepository cartsInMemoryRepository)
+        public CartController(IProductsStorage productsStorage,ICartsRepository cartsInMemoryRepository)
         {
             this.productsStorage = productsStorage;
-            this.user = user;
             this.cartsInMemoryRepository = cartsInMemoryRepository;
         }
         public IActionResult Index()
         {
-            var cart = cartsInMemoryRepository.TryGetByUserId(user.UserId);
+            var cart = cartsInMemoryRepository.TryGetByUserId(Constants.UserId);
             return View(Mapping.ToCartItemViewModel(cart));
         }
         public IActionResult Add(Guid productid)
         {
             var product = productsStorage.TryGetById(productid);
-            cartsInMemoryRepository.Add(product, user.UserId);
+            cartsInMemoryRepository.Add(product, Constants.UserId);
             return RedirectToAction("Index");
         }
         public IActionResult DecreaseAmount(Guid productid)
         {
-            cartsInMemoryRepository.DecreaseAmount(productid, user.UserId);
+            cartsInMemoryRepository.DecreaseAmount(productid, Constants.UserId);
             return RedirectToAction("Index");
         }
         public IActionResult Clear(User user)
         {
-            cartsInMemoryRepository.Clear(user.UserId);
+            cartsInMemoryRepository.Clear(Constants.UserId);
             return RedirectToAction("Index");
         }
     }
