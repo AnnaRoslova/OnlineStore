@@ -31,7 +31,7 @@ namespace OnlineShopWebApp.Controllers
                 var result = _signInManager.PasswordSignInAsync(login.UserName, login.Password, login.RememberMe, false).Result;
                 if (result.Succeeded)
                 {
-                    return Redirect(login.ReturnUrl ?? "/Home");
+                    return Redirect(login.ReturnUrl ?? "/Home/Index");
                 }
                 else
                 {

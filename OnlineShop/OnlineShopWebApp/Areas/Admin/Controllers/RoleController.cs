@@ -1,20 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Areas.Admin.Models;
+using System.Linq;
+using System.Threading.Tasks;
+using OnlineShop.Db;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area(Constants.AdminRoleName)]
+    [Authorize(Roles = Constants.AdminRoleName)]
     public class RoleController : Controller
     {
         private readonly IRolesRepository rolesRepository;
-
-        public RoleController(IRolesRepository rolesRepository)
+        private readonly RoleManager<IdentityRole> roleManager;
+        public RoleController(IRolesRepository rolesRepository, RoleManager<IdentityRole> roleManager)
         {
             this.rolesRepository = rolesRepository;
+            this.roleManager = roleManager;
         }
         public ActionResult Index()
         {
-            var roles = rolesRepository.GetRoles();
+            var roles = roleManager.Roles.ToList(); 
             if (roles != null)
             {
                 return View(roles);
@@ -23,7 +30,11 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
         public ActionResult Remove(string roleName)
         {
-            rolesRepository.RoleDelete(roleName);
+            var role = roleManager.FindByNameAsync(roleName).Result;
+            if (role != null)
+            {
+                roleManager.DeleteAsync(role).Wait();
+            }
             return RedirectToAction(nameof(Index));
         }
         public ActionResult Add()
@@ -33,14 +44,13 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Add(Role role)
         {
-            if (rolesRepository.TryGetByName(role.Name) != null)
+            if (roleManager.FindByNameAsync(role.Name).Result == null)
             {
-                ModelState.AddModelError(" ", "Такая роль уже существует");
-            }
-            if (ModelState.IsValid)
-            {
-                rolesRepository.AddRole(role);
-                return RedirectToAction(nameof(Index));
+                if(ModelState.IsValid) 
+                {
+                    roleManager.CreateAsync(new IdentityRole(role.Name)).Wait();
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return View(role);
         }
