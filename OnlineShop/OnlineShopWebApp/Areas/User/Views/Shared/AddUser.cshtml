@@ -2,6 +2,7 @@
 
     <div class="modal-body">
         <div asp-validation-summary="All">
+            <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl" />
             <div class="row">
                 <div class="col-6">
                     <input class="form-control" placeholder="Введите имя" asp-for="UserName" />
