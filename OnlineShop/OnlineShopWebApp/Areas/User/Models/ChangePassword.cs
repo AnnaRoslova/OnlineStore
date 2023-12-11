@@ -4,7 +4,7 @@ namespace OnlineShopWebApp.Models
     public class ChangePassword
     {
         public string UserName { get; set; }
-
+        public string CurrentPassword { get; set; }
         [Required(ErrorMessage = "Поле обязательно для заполнения.")]
         [StringLength(100, MinimumLength = 8, ErrorMessage ="Пароль должен быть не менее 8 символов.")]
         public string Password { get; set; }
