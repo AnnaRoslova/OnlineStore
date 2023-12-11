@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using OnlineShop.Db.Models;
 using OnlineShop.Db;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -30,7 +31,7 @@ namespace OnlineShopWebApp.Controllers
                 var result = _signInManager.PasswordSignInAsync(login.UserName, login.Password, login.RememberMe, false).Result;
                 if (result.Succeeded)
                 {
-                    return Redirect(login.ReturnUrl);
+                    return Redirect(login.ReturnUrl ?? "/Home");
                 }
                 else
                 {
@@ -57,13 +58,13 @@ namespace OnlineShopWebApp.Controllers
             }
             if (ModelState.IsValid)
             {
-                User user = new User { Email = register.Email, UserName = register.UserName, Phone = register.Phone, Password = register.Password };
+                User user = new User { Email = register.Email, UserName = register.UserName, Phone = register.Phone };
 
                 var resulst = _userManager.CreateAsync(user, register.Password).Result;
                 if (resulst.Succeeded)
                 {
                     _signInManager.SignInAsync(user, false).Wait();
-                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                    return Redirect(register.ReturnUrl ?? "/Home");
                 }
                 else
                 {
