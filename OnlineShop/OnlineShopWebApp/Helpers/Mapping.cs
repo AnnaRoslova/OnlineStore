@@ -16,6 +16,7 @@ namespace OnlineShopWebApp.Helpers
                 Cost = product.Cost,
                 Description = product.Description,
                 Manufactured = product.Manufactured,
+                ImagePath = product.ImagePath,
 
             };
         }

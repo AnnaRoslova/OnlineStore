@@ -6,6 +6,9 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using System.Linq;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
@@ -14,10 +17,11 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IProductsStorage productsStorage;
-
-        public ProductController(IProductsStorage productsStorage)
+        private readonly IWebHostEnvironment webHostEnvironment;
+        public ProductController(IProductsStorage productsStorage, IWebHostEnvironment webHostEnvironment)
         {
             this.productsStorage = productsStorage;
+            this.webHostEnvironment = webHostEnvironment;
         }
         public ActionResult Index()
         {
@@ -39,19 +43,29 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
+                string productImagePath = Path.Combine(webHostEnvironment.WebRootPath + "/images/");
+                if(!Directory.Exists(productImagePath))
+                {
+                    Directory.CreateDirectory(productImagePath);
+                }
+                var fileName = Guid.NewGuid() + "." + product.UploadedImage.FileName.Split('.').Last();
+                using (var fileStream = new FileStream(productImagePath + fileName, FileMode.Create))
+                {
+                    product.UploadedImage.CopyTo(fileStream);
+                }
+                var productDb = new Product
+                {
+                    Name = product.Name,
+                    Color = product.Color,
+                    Cost = product.Cost,
+                    Compound = product.Compound,
+                    Description = product.Description,
+                    ImagePath = "images/" + fileName,
+                    Manufactured = product.Manufactured
+                };
+                productsStorage.AddProduct(productDb);
                 return View(product);
             }
-            var productDb = new Product
-            {
-                Name = product.Name,
-                Color = product.Color,
-                Cost = product.Cost,
-                Compound = product.Compound,
-                Description = product.Description,
-                ImagePath = product.ImagePath,
-                Manufactured = product.Manufactured
-            };
-            productsStorage.AddProduct(productDb);
             return RedirectToAction(nameof(Index));
         }
         public IActionResult Delete(Guid productId)
@@ -71,19 +85,29 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
+                if (product.UploadedImage != null)
+                {
+                    string productImagePath = Path.Combine(webHostEnvironment.WebRootPath + "/images/");
+                    var fileName = Guid.NewGuid() + "." + product.UploadedImage.FileName.Split('.').Last();
+                    using (var fileStream = new FileStream(productImagePath + fileName, FileMode.Create))
+                    {
+                        product.UploadedImage.CopyTo(fileStream);
+                    }
+                    var productDb = new Product
+                    {
+                        Name = product.Name,
+                        Color = product.Color,
+                        Cost = product.Cost,
+                        Compound = product.Compound,
+                        Description = product.Description,
+                        ImagePath = "images/"+fileName,
+                        Manufactured = product.Manufactured
+                    };
+                    productsStorage.Update(productDb);
+                }
                 return View(product);
             }
-            var productDb = new Product
-            {
-                Name = product.Name,
-                Color = product.Color,
-                Cost = product.Cost,
-                Compound = product.Compound,
-                Description = product.Description,
-                ImagePath = product.ImagePath,
-                Manufactured = product.Manufactured
-            };
-            productsStorage.Update(productDb);
+           
             return RedirectToAction(nameof(Index));
         }
     }

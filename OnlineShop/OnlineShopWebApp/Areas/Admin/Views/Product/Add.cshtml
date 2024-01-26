@@ -1,5 +1,5 @@
 ﻿@model ProductViewModel
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     <div asp-validation-summary="All">
     <div class="row">
         <div class="col-6">
@@ -45,8 +45,8 @@
     </div>
     <div class="row">
         <div class="col-6">
-            <label>Изображение товара:</label>
-            <input class="form-control" type="text" name="ImagePath" value="/images/2749271.png" />
+                <label>Загрузить изображение</label>
+                <input class="form-control" type="file" name="UploadedImage" />
         </div>
     </div>
         </div>
